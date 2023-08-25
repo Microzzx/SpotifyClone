@@ -3,7 +3,8 @@ import { genres } from "../assets/constants";
 import { useGetTopChartsQuery } from "../redux/services/spotify";
 
 const Discover = () => {
-  const { data, isFetching, error } = useGetTopChartsQuery();
+  const date = "2023-08-17";
+  const { data, isFetching, error } = useGetTopChartsQuery(date);
   const genresTitle = "Pop";
   console.log(data);
   if (isFetching) return <Loader title="Loading songs ..." />;

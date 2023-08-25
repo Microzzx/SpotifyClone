@@ -10,7 +10,9 @@ export const spotifyApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getTopCharts: builder.query({ query: () => "/top_200_tracks" }),
+    getTopCharts: builder.query({
+      query: (date) => `/top_200_tracks?date=${date}`,
+    }),
   }),
 });
 
