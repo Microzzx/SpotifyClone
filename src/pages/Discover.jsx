@@ -1,12 +1,16 @@
 import { Error, Loader, SongCard } from "../components";
 import { genres } from "../assets/constants";
 import { useGetTopChartsQuery } from "../redux/services/spotify";
+import { useDispatch, useSelector } from "react-redux";
 
 const Discover = () => {
   const date = "2023-08-17";
   const { data, isFetching, error } = useGetTopChartsQuery(date);
   const genresTitle = "Pop";
   console.log(data);
+
+  const dispatch = useDispatch();
+  const { activeSong, isPlaying } = useSelector((state) => state.player);
   if (isFetching) return <Loader title="Loading songs ..." />;
   if (error) return <Error />;
   return (
@@ -33,7 +37,14 @@ const Discover = () => {
       </div>
       <div className="flex flex-wrap justify-center sm:justify-start gap-8">
         {data?.map((song, i) => (
-          <SongCard key={song.key} song={song} i={i} />
+          <SongCard
+            key={song.key}
+            song={song}
+            isPlaying={isPlaying}
+            activeSong={activeSong}
+            data={data}
+            i={i}
+          />
         ))}
       </div>
     </div>
