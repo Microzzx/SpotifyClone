@@ -4,17 +4,22 @@ import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
 
 const SongCard = ({ song, isPlaying, activeSong, data, i }) => {
-  const HandlePlayClick = () => {};
-  const HandlePauseClick = () => {};
-
+  const dispatch = useDispatch();
+  const handlePause = () => {
+    dispatch(playPause(false));
+  };
+  const handlePlay = () => {
+    dispatch(setActiveSong({ song, data, i }));
+    dispatch(playPause(true));
+  };
   return (
     <div className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-20 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer ">
       <div className="relative w-full h-56 group">
         <div
           className={`absolute inset-0 justify-center items-center bg-black bg-opacity-50 group-hover:flex
         ${
-          activeSong?.title === song.trackMetadata.trackName
-            ? "flex bg-red-500 bg-opacity-70"
+          activeSong?.title === song.title
+            ? "flex bg-black bg-opacity-70"
             : "hidden"
         }`}
         >
@@ -22,30 +27,26 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }) => {
             song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}
-            handlePlay={HandlePlayClick}
-            handlePause={HandlePauseClick}
+            handlePlay={handlePlay}
+            handlePause={handlePause}
           />
         </div>
 
-        <img
-          className="h-56"
-          alt="song_img"
-          src={song.trackMetadata?.displayImageUri}
-        />
+        <img className="h-56" alt="song_img" src={song?.imgUri} />
       </div>
       <div className="flex flex-col mt-4">
         <p className="font-semibold text-lg text-white truncate">
-          <Link to={`/songs/${song?.key}`}>{song.trackMetadata.trackName}</Link>
+          <Link to={`/songs/${song?.key}`}>{song?.title}</Link>
         </p>
         <p className="text-sm text-white truncate mt-1">
           <Link
             to={
-              song.trackMetadata.artists
-                ? `/artists/${song?.trackMetadata.artists[0]?.spotifyUri}`
+              song.artists
+                ? `/artists/${song?.artist?.spotifyUri}`
                 : "/top-artists"
             }
           >
-            {song.trackMetadata.artists[0].name}
+            {song?.artist?.name}
           </Link>
         </p>
       </div>
