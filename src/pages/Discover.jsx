@@ -16,6 +16,7 @@ const Discover = () => {
         spotifyUri: item.trackMetadata.artists[0].spotifyUri,
       },
       audio: import.meta.env.VITE_AUDIO_SRC,
+      key: item.chartEntryData.rankingMetric.value,
     };
   });
   console.log(track);
@@ -50,6 +51,7 @@ const Discover = () => {
       <div className="flex flex-wrap justify-center sm:justify-start gap-8">
         {track?.map((song, i) => (
           <SongCard
+            key={song.key}
             song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}
