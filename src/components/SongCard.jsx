@@ -32,7 +32,7 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }) => {
           />
         </div>
 
-        <img className="h-56" alt="song_img" src={song?.imgUri} />
+        <img className="h-56" alt="song_img" src={song?.images?.coverarthq} />
       </div>
       <div className="flex flex-col mt-4">
         <p className="font-semibold text-lg text-white truncate">
@@ -42,11 +42,11 @@ const SongCard = ({ song, isPlaying, activeSong, data, i }) => {
           <Link
             to={
               song.artists
-                ? `/artists/${song?.artist?.spotifyUri}`
+                ? `/artists/${song?.artists[0]?.adamid}`
                 : "/top-artists"
             }
           >
-            {song?.artist?.name}
+            {song?.subtitle}
           </Link>
         </p>
       </div>

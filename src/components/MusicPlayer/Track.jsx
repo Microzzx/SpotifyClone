@@ -7,7 +7,11 @@ const Track = ({ isPlaying, isActive, activeSong }) => (
         isPlaying && isActive ? "animate-[spin_3s_linear_infinite]" : ""
       } hidden sm:block h-16 w-16 mr-4`}
     >
-      <img src={activeSong?.imgUri} alt="cover art" className="rounded-full" />
+      <img
+        src={activeSong?.images?.coverarthq}
+        alt="cover art"
+        className="rounded-full"
+      />
     </div>
     <div className="w-[50%]">
       <p className="truncate text-white font-bold text-lg">

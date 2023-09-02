@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper";
 import PlayPause from "./PlayPause";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
-import { useGetTopChartsQuery } from "../redux/services/spotify";
+import { useGetTopChartsQuery } from "../redux/services/shazam";
 import "swiper/css";
 import "swiper/css/free-mode";
 
@@ -22,15 +22,15 @@ const TopChartCard = ({
     <div className="flex-1 flex flex-row justify-between items-center">
       <img
         className="w-20 h-20 rounded-lg"
-        src={song?.imgUri}
+        src={song?.images?.coverarthq}
         alt={song?.title}
       />
       <div className="flex-1 flex flex-col justify-center mx-3">
-        <Link to={`/songs/${song.key}`}>
+        <Link to={`/songs/${song?.key}`}>
           <p className="text-white text-xl font-bold">{song?.title}</p>
         </Link>
-        <Link to={`/artists/${song?.artist?.name}`}>
-          <p className="text-sm text-gray-300 mt-1">{song?.artist?.name}</p>
+        <Link to={`/artists/${song?.artists[0]?.adamid}`}>
+          <p className="text-sm text-gray-300 mt-1">{song?.subtitle}</p>
         </Link>
       </div>
     </div>
@@ -47,23 +47,9 @@ const TopChartCard = ({
 const TopPlay = () => {
   const dispatch = useDispatch();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const date = "2023-08-17";
-  const { data } = useGetTopChartsQuery(date);
-  const track = data?.map((item) => {
-    return {
-      title: item.trackMetadata.trackName,
-      uri: item.trackMetadata.trackUri,
-      imgUri: item.trackMetadata.displayImageUri,
-      artist: {
-        name: item.trackMetadata.artists[0].name,
-        spotifyUri: item.trackMetadata.artists[0].spotifyUri,
-      },
-      audio: import.meta.env.VITE_AUDIO_SRC,
-      key: item.chartEntryData.rankingMetric.value,
-    };
-  });
+  const { data } = useGetTopChartsQuery();
   const divRef = useRef(null);
-  const topPlays = track?.slice(0, 5);
+  const topPlays = data?.tracks?.slice(0, 5);
 
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
@@ -103,7 +89,7 @@ const TopPlay = () => {
       </div>
       <div className="w-full flex flex-col mt-8">
         <div className="flex flex-row justify-between items-center">
-          <h2 className="text-white text-2xl font-bold">Top Charts</h2>
+          <h2 className="text-white text-2xl font-bold">Top Artists</h2>
           <Link to="/top-artists">
             <p className="text-gray-300 text-base cursor-pointer">See more</p>
           </Link>
@@ -123,9 +109,9 @@ const TopPlay = () => {
               style={{ width: "25%", height: "auto" }}
               className="shadow-lg rounded-full animate-slideright"
             >
-              <Link to={`/artists/${song?.artist?.name}`}>
+              <Link to={`/artists/${song?.artists[0]?.adamid}`}>
                 <img
-                  src={song?.imgUri}
+                  src={song?.images?.background}
                   alt="song-img"
                   className="rounded-full w-full object-cover"
                 />
