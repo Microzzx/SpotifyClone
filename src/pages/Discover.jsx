@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Discover = () => {
   const { data, isFetching, error } = useGetTopChartsQuery();
+  const topCharts = data?.tracks
+    ?.filter((tracks) => tracks?.hub?.actions !== undefined)
+    .slice(0, 20);
   const genresTitle = "Pop";
   const dispatch = useDispatch();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
@@ -14,7 +17,7 @@ const Discover = () => {
     <div className="flex flex-col">
       <div
         className="w-full flex flex-col sm:flex-row justify-between items-center
-       mt-4 md-10"
+       mt-4 mb-10"
       >
         <h2 className="font-bold text-3xl text-left text-white">
           Discover {genresTitle}
@@ -33,13 +36,13 @@ const Discover = () => {
         </select>
       </div>
       <div className="flex flex-wrap justify-center sm:justify-start gap-8">
-        {data?.tracks?.map((song, i) => (
+        {topCharts.map((song, i) => (
           <SongCard
-            key={song.key}
+            key={song.hub.actions[0].id}
             song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}
-            data={data}
+            data={topCharts}
             i={i}
           />
         ))}
