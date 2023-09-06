@@ -26,7 +26,7 @@ const TopChartCard = ({
         alt={song?.title}
       />
       <div className="flex-1 flex flex-col justify-center mx-3">
-        <Link to={`/songs/${song?.key}`}>
+        <Link to={`/songs/${song?.hub?.actions[0]?.id}`}>
           <p className="text-white text-xl font-bold">{song?.title}</p>
         </Link>
         <Link to={`/artists/${song?.artists[0]?.adamid}`}>
@@ -76,7 +76,7 @@ const TopPlay = () => {
         <div className="mt-4 flex flex-col gap-1">
           {topPlays?.map((song, i) => (
             <TopChartCard
-              key={song.key}
+              key={song.hub.actions[0].id}
               song={song}
               i={i}
               isPlaying={isPlaying}

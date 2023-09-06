@@ -14,10 +14,17 @@ export const shazamApi = createApi({
     getTopCharts: builder.query({
       query: () => `/charts/track`,
     }),
-    // getArtistDetails: builder.query({
-    //   query: ({ songid }) => `/artist_overview?id=${songid}`,
-    // }),
+    getSongDetails: builder.query({
+      query: ({ songid }) => `/songs/v2/get-details?id=${songid}`,
+    }),
+    getTopSongs: builder.query({
+      query: ({ artistId }) => `/artists/get-top-songs?id=${artistId}`,
+    }),
   }),
 });
 
-export const { useGetTopChartsQuery } = shazamApi;
+export const {
+  useGetTopChartsQuery,
+  useGetSongDetailsQuery,
+  useGetTopSongsQuery,
+} = shazamApi;
