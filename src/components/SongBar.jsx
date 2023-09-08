@@ -1,17 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import PlayPause from "./PlayPause";
-
-const SongBar = ({
-  song,
-  i,
-  artistId,
-  isPlaying,
-  activeSong,
-  handlePause,
-  handlePlay,
-}) => (
+const SongBar = ({ song, i, artistId }) => (
   <div
     className={`w-full flex flex-row items-center hover:bg-[#4c426e] bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2`}
   >
@@ -39,15 +29,6 @@ const SongBar = ({
         <p className="text-base text-gray-300 mt-1">{song?.attributes?.name}</p>
       </div>
     </div>
-    {!artistId ? (
-      <PlayPause
-        isPlaying={isPlaying}
-        activeSong={activeSong}
-        song={song}
-        handlePause={handlePause}
-        handlePlay={() => handlePlay(song, i)}
-      />
-    ) : null}
   </div>
 );
 

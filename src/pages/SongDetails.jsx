@@ -1,6 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setActiveSong, playPause } from "../redux/features/playerSlice";
 import { DetailsHeader, Error, Loader, RelatedSongs } from "../components";
 import {
   useGetSongDetailsQuery,
@@ -8,37 +6,28 @@ import {
 } from "../redux/services/shazam";
 
 const SongDetails = () => {
-  const dispatch = useDispatch();
   const { songid } = useParams();
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data: songData, isFetching: isFetchingSongDetails } =
-    useGetSongDetailsQuery({ songid });
-  console.log(songData);
-  const artistId = songData?.data[0]?.relationships?.artists?.data[0]?.id;
   const {
-    data,
-    isFetching: isFetchingTopSongs,
+    data: songData,
+    isFetching: isFetchingSongDetails,
     error,
-  } = useGetTopSongsQuery({ artistId });
-  console.log("4:", data);
+  } = useGetSongDetailsQuery({ songid });
 
-  //const topSongData = Object.values(data);
-
-  const handlePause = () => {
-    dispatch(playPause(false));
-  };
-  const handlePlay = (song, i) => {
-    dispatch(setActiveSong({ song, data, i }));
-    dispatch(playPause(true));
-  };
+  const artistId = songData?.data[0]?.relationships?.artists?.data[0]?.id;
+  const { data: TopSongData, isFetching: isFetchingTopSongs } =
+    useGetTopSongsQuery({ artistId });
 
   if (isFetchingSongDetails || isFetchingTopSongs) {
     return <Loader title="searching"></Loader>;
   }
 
+  if (error) {
+    return <Error />;
+  }
+
   return (
     <div className="flex flex-col">
-      <DetailsHeader artistId={artistId} songData={songData} />
+      <DetailsHeader artistId="" songData={songData} />
       <div className="mb-10 ml-5 mt-5">
         <h2 className="text-white text-3xl font-bold">Lyrics</h2>
         <div className="mt-5">
@@ -51,11 +40,7 @@ const SongDetails = () => {
       </div>
 
       <RelatedSongs
-        data={data}
-        isPlaying={isPlaying}
-        activeSong={activeSong}
-        handlePause={handlePause}
-        handlePlay={handlePlay}
+        data={Object.values(TopSongData?.data)}
         artistId={artistId}
       />
     </div>
