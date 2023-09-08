@@ -47,7 +47,7 @@ const TopChartCard = ({
 const TopPlay = () => {
   const dispatch = useDispatch();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data } = useGetTopChartsQuery();
+  const { data } = useGetTopChartsQuery("");
   const divRef = useRef(null);
   const topPlays = data?.tracks?.slice(0, 5);
 

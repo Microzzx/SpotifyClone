@@ -4,7 +4,7 @@ import { useGetTopChartsQuery } from "../redux/services/shazam";
 import { useDispatch, useSelector } from "react-redux";
 
 const Discover = () => {
-  const { data, isFetching, error } = useGetTopChartsQuery();
+  const { data, isFetching, error } = useGetTopChartsQuery("");
   const topCharts = data?.tracks
     ?.filter((tracks) => tracks?.hub?.actions !== undefined)
     .slice(0, 20);
