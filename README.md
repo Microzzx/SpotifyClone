@@ -1,6 +1,7 @@
 # SpotifyClone (Lyriks App)
 
 SpotifyClone is a React.js Music Application developed for the purpose of learning various aspects of web development, including API data fetching, file structure organization, Redux state management, and more.
+You can access the application at [Link](https://inw-lyriks-app.netlify.app).
 
 ## Technologies Used
 1. React.js (Vite.js)
