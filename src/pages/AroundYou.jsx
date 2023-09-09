@@ -32,8 +32,8 @@ const AroundYou = () => {
         className="w-full flex flex-col sm:flex-row justify-between items-center
        mt-4 mb-10"
       >
-        <h2 className="text-white text-3xl text-left font-bold">
-          Around You {country}
+        <h2 className="text-white text-3xl text-left font-medium">
+          Around you at <span className="font-black">{country}</span>
         </h2>
       </div>
 
