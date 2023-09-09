@@ -1,8 +1,6 @@
 import { Error, Loader, SongCard } from "../components";
-import { genres } from "../assets/constants";
 import { useGetTopChartsQuery } from "../redux/services/shazam";
-import { useDispatch, useSelector } from "react-redux";
-import { selectGenreListId } from "../redux/features/playerSlice";
+import { useSelector } from "react-redux";
 
 const Discover = () => {
   const { data, isFetching, error } = useGetTopChartsQuery("");

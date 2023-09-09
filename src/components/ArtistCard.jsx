@@ -10,7 +10,7 @@ const ArtistCard = ({ track }) => {
       }}
     >
       <img
-        src={track?.images?.coverart}
+        src={track?.images?.background}
         alt="artist image"
         className="w-full h-56 rounded-lg"
       />
