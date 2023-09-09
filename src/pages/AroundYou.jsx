@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { Loader, Error, SongCard } from "../components";
 import { useGetTopChartsQuery } from "../redux/services/shazam";
 
-const CountryTracks = () => {
+const AroundYou = () => {
   const [country, setCountry] = useState("");
   const [loading, setLoading] = useState(true);
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const { data, isFetching, error } = useGetTopChartsQuery({ country });
-  console.log(data);
+
   useEffect(() => {
     axios
       .get(
@@ -32,7 +32,9 @@ const CountryTracks = () => {
         className="w-full flex flex-col sm:flex-row justify-between items-center
        mt-4 mb-10"
       >
-        <h2 className="text-white text-3xl text-left font-bold">Around You</h2>
+        <h2 className="text-white text-3xl text-left font-bold">
+          Around You {country}
+        </h2>
       </div>
 
       <div className="flex flex-wrap justify-center sm:justify-start gap-8">
@@ -51,4 +53,4 @@ const CountryTracks = () => {
   );
 };
 
-export default CountryTracks;
+export default AroundYou;
